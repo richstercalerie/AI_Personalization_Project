@@ -45,7 +45,7 @@ st.markdown("### Get Personalized Policy Recommendations")
 customer_id = st.number_input("Enter Customer ID:", min_value=1, step=1)
 
 # API URL
-FASTAPI_URL = "http://127.0.0.1:8000/recommend/"
+FASTAPI_URL = "https://fastapi-backend.onrender.com/recommend/"
 
 # Fetch recommendations when button is clicked
 if st.button("📌 Get My Recommendations"):
