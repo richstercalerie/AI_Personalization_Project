@@ -1,26 +1,28 @@
+import os
 from fastapi import FastAPI, HTTPException
 import pickle
 import pandas as pd
-import os
 
 app = FastAPI()
 
-# Paths
-model_path = "models/saved/recommendation_svd.pkl"
-data_path = "data/processed/cleaned_customer_data.csv"
+# Use an absolute path based on the project structure
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+MODEL_PATH = os.path.join(BASE_DIR, "models/saved/recommendation_svd.pkl")
+DATA_PATH = os.path.join(BASE_DIR, "data/processed/cleaned_customer_data.csv")
 
 # Load the trained model
-if os.path.exists(model_path):
-    with open(model_path, "rb") as f:
+if os.path.exists(MODEL_PATH):
+    with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
+    print("✅ Model loaded successfully!")
 else:
-    raise FileNotFoundError("🚨 Model file not found! Please train the model first.")
+    raise FileNotFoundError(f"🚨 Model file not found at {MODEL_PATH}! Please train the model first.")
 
 # Load customer-policy data
-if os.path.exists(data_path):
-    df = pd.read_csv(data_path)
+if os.path.exists(DATA_PATH):
+    df = pd.read_csv(DATA_PATH)
 else:
-    raise FileNotFoundError("🚨 Processed data file not found! Please preprocess the data first.")
+    raise FileNotFoundError(f"🚨 Processed data file not found at {DATA_PATH}! Please preprocess the data first.")
 
 # Function to generate recommendations
 def recommend_policies(customer_id: int, n=3):
@@ -30,7 +32,7 @@ def recommend_policies(customer_id: int, n=3):
     all_policies = df["policy_id"].unique()
     predictions = [(int(policy), float(model.predict(customer_id, policy).est)) for policy in all_policies]
     predictions.sort(key=lambda x: x[1], reverse=True)
-    
+
     return [policy for policy, _ in predictions[:n]]
 
 # API Endpoint for Recommendations
