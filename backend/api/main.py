@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-app = FastAPI()  # ✅ Defines the FastAPI instance
+app = FastAPI()
 
 @app.get("/")
-def read_root():
+def home():
     return {"message": "API is running successfully"}
