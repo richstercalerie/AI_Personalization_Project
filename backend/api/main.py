@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from backend.api.recommend import get_recommendations
+from api.recommend import get_recommendations
+
 
 
 
