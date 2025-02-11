@@ -1,7 +1,5 @@
 from fastapi import FastAPI
-from api.recommend import get_recommendations
-
-
+from recommend import get_recommendations  # ✅ Relative Import
 
 
 app = FastAPI()
