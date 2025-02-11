@@ -3,6 +3,10 @@ set -e  # Exit on first error
 
 echo "🚀 Starting Build Process"
 
+# Install Python dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
+
 # Ensure the models directory exists
 mkdir -p models/saved
 
@@ -16,4 +20,4 @@ fi
 
 # Start the FastAPI server
 cd backend/api
-uvicorn main:app --host 0.0.0.0 --port 10000
+exec uvicorn main:app --host 0.0.0.0 --port 10000
