@@ -3,5 +3,5 @@ uvicorn
 streamlit
 requests
 pandas
-numpy
+numpy<2  # Force NumPy 1.x to avoid crashes
 scikit-surprise
