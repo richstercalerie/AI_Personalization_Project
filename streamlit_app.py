@@ -41,9 +41,10 @@ st.sidebar.title("🔍 AI-Powered Insurance Dashboard")
 customer_id = st.sidebar.number_input("Enter Customer ID:", min_value=1, step=1)
 
 # 📌 Fetch Data Button
-if st.sidebar.button("📌 Get My Recommendations"):
-    with st.spinner("Fetching recommendations..."):
+if st.sidebar.button("📌 Get My Recommendations & Churn Risk"):
+    with st.spinner("Fetching recommendations & churn prediction..."):
         try:
+            # 🔄 Make API calls
             response = requests.get(f"{FASTAPI_RECOMMEND_URL}{customer_id}")
             churn_response = requests.get(f"{FASTAPI_CHURN_URL}{customer_id}")
 
@@ -75,26 +76,30 @@ if st.sidebar.button("📌 Get My Recommendations"):
         except requests.exceptions.RequestException as e:
             st.error(f"🚨 API Connection Error: {e}")
 
-# 📊 Sample Data Visualization
+# 📊 Customer Data Visualization
 st.subheader("📈 Customer Insights")
 
-# Load Sample Data
-df = pd.read_csv("data/processed/cleaned_customer_data.csv")
+try:
+    # Load Data
+    df = pd.read_csv("data/processed/cleaned_customer_data.csv")
 
-# 🎨 Engagement Score Distribution
-fig1 = px.histogram(df, x="engagement_score", nbins=20, title="📊 Customer Engagement Distribution", color_discrete_sequence=["#007BFF"])
-st.plotly_chart(fig1, use_container_width=True)
+    # 🎨 Engagement Score Distribution
+    fig1 = px.histogram(df, x="engagement_score", nbins=20, title="📊 Customer Engagement Distribution", color_discrete_sequence=["#007BFF"])
+    st.plotly_chart(fig1, use_container_width=True)
 
-# 💰 Income vs. Policy Claims
-fig2 = px.scatter(df, x="income", y="past_claims", color="engagement_score", title="💰 Income vs. Policy Claims", size_max=15, color_continuous_scale="blues")
-st.plotly_chart(fig2, use_container_width=True)
+    # 💰 Income vs. Policy Claims
+    fig2 = px.scatter(df, x="income", y="past_claims", color="engagement_score", title="💰 Income vs. Policy Claims", size_max=15, color_continuous_scale="blues")
+    st.plotly_chart(fig2, use_container_width=True)
 
-# 📉 Churn Risk Heatmap
-st.subheader("⚠ Churn Risk Analysis")
-plt.figure(figsize=(10, 6))
-corr = df.corr()
-sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
-st.pyplot(plt)
+    # 📉 Churn Risk Heatmap
+    st.subheader("⚠ Churn Risk Analysis")
+    plt.figure(figsize=(10, 6))
+    corr = df.corr()
+    sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
+    st.pyplot(plt)
+
+except FileNotFoundError:
+    st.warning("⚠ Processed customer data not found! Please preprocess the data first.")
 
 # 🎯 Footer
 st.markdown(
