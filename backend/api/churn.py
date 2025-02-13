@@ -1,36 +1,30 @@
-from fastapi import FastAPI, HTTPException
-import joblib
+import pickle
 import pandas as pd
-import os
+from fastapi import HTTPException
 
-app = FastAPI()
+# Load Model & Data
+MODEL_PATH = "models/saved/churn_model.pkl"
+DATA_PATH = "data/processed/preprocessed_churn_data.csv"
 
-# ✅ Load the trained model
-model_path = "models/saved/churn_model.pkl"
-if os.path.exists(model_path):
-    model = joblib.load(model_path)
-else:
-    raise FileNotFoundError("🚨 Churn model file not found! Train the model first.")
+try:
+    with open(MODEL_PATH, "rb") as f:
+        model = pickle.load(f)
+except FileNotFoundError:
+    raise RuntimeError("🚨 Model file not found! Please train the model.")
 
-# ✅ Load column names
-data_path = "data/processed/preprocessed_churn_data.csv"
-df = pd.read_csv(data_path)
-feature_columns = df.drop(columns=["churn"]).columns.tolist()  # Remove target column
+try:
+    df = pd.read_csv(DATA_PATH)
+except FileNotFoundError:
+    raise RuntimeError("🚨 Data file not found! Please preprocess the data.")
 
-@app.get("/")
-def home():
-    return {"message": "Churn Prediction API is running successfully"}
+# ✅ Churn Prediction Function
+def predict_churn(customer_id: int):
+    if customer_id not in df["customer_id"].values:
+        raise HTTPException(status_code=404, detail="Customer ID not found")
 
-@app.post("/predict_churn/")
-def predict_churn(customer_data: dict):
     try:
-        # Convert input data to DataFrame
-        input_df = pd.DataFrame([customer_data])
-        input_df = input_df[feature_columns]  # Ensure correct feature order
-
-        # Predict churn probability
-        churn_proba = model.predict_proba(input_df)[0][1]  # Probability of churning
-
-        return {"churn_probability": churn_proba}
+        features = df[df["customer_id"] == customer_id].drop(columns=["customer_id"])
+        prediction = model.predict([features.values[0]])
+        return {"customer_id": customer_id, "churn_prediction": bool(prediction[0])}
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Churn prediction error: {str(e)}")

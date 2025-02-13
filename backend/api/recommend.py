@@ -1,47 +1,33 @@
-import os
-from fastapi import FastAPI, HTTPException
 import pickle
 import pandas as pd
+from fastapi import HTTPException
 
-app = FastAPI()
+# Load Model & Data
+MODEL_PATH = "models/saved/recommendation_svd.pkl"
+DATA_PATH = "data/processed/cleaned_customer_data.csv"
 
-# Use an absolute path based on the project structure
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-MODEL_PATH = os.path.join(BASE_DIR, "models/saved/recommendation_svd.pkl")
-DATA_PATH = os.path.join(BASE_DIR, "data/processed/cleaned_customer_data.csv")
-
-# Load the trained model
-if os.path.exists(MODEL_PATH):
+try:
     with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
-    print("✅ Model loaded successfully!")
-else:
-    raise FileNotFoundError(f"🚨 Model file not found at {MODEL_PATH}! Please train the model first.")
+except FileNotFoundError:
+    raise RuntimeError("🚨 Model file not found! Please train the model.")
 
-# Load customer-policy data
-if os.path.exists(DATA_PATH):
+try:
     df = pd.read_csv(DATA_PATH)
-else:
-    raise FileNotFoundError(f"🚨 Processed data file not found at {DATA_PATH}! Please preprocess the data first.")
+except FileNotFoundError:
+    raise RuntimeError("🚨 Data file not found! Please preprocess the data.")
 
-# Function to generate recommendations
-def recommend_policies(customer_id: int, n=3):
-    if customer_id not in df["customer_id"].values:
-        raise HTTPException(status_code=404, detail="Customer ID not found!")
-
-    all_policies = df["policy_id"].unique()
-    predictions = [(int(policy), float(model.predict(customer_id, policy).est)) for policy in all_policies]
-    predictions.sort(key=lambda x: x[1], reverse=True)
-
-    return [policy for policy, _ in predictions[:n]]
-
-# API Endpoint for Recommendations
-@app.get("/recommend/{customer_id}")
+# ✅ Recommendation Function
 def get_recommendations(customer_id: int):
+    if customer_id not in df["customer_id"].values:
+        raise HTTPException(status_code=404, detail="Customer ID not found")
+    
     try:
-        recommendations = recommend_policies(customer_id)
-        return {"customer_id": customer_id, "recommended_policies": recommendations}
-    except HTTPException as e:
-        raise e
+        all_policies = df["policy_id"].unique()
+        predictions = [(int(policy), float(model.predict(customer_id, policy).est)) for policy in all_policies]
+        predictions.sort(key=lambda x: x[1], reverse=True)
+
+        recommended_policies = [policy for policy, _ in predictions[:3]]
+        return {"customer_id": customer_id, "recommended_policies": recommended_policies}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Error generating recommendations: {str(e)}")

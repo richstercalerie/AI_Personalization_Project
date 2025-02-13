@@ -1,0 +1,16 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore environment folders
+venv/
+env/
+.venv/
+
+# Ignore dataset files (but allow the model)
+data/raw/
+data/temp/
+
+# Allow model files 🚀
+!models/saved/recommendation_svd.pkl
