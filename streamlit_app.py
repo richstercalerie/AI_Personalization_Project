@@ -2,34 +2,12 @@ import streamlit as st
 import requests
 import pandas as pd
 import plotly.express as px
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 # 🎨 Streamlit Page Configuration
 st.set_page_config(
     page_title="AI-Driven Insurance Dashboard",
     page_icon="📊",
     layout="wide"
-)
-
-# 🌟 Custom Streamlit CSS for styling
-st.markdown(
-    """
-    <style>
-        body { background-color: #f4f4f4; }
-        .stTextInput, .stNumberInput, .stButton { font-size: 18px !important; }
-        .stButton>button {
-            background-color: #007BFF !important;
-            color: white !important;
-            border-radius: 10px;
-            padding: 10px 20px;
-        }
-        .stButton>button:hover { background-color: #0056b3 !important; }
-        .stTitle, .stHeader, .stSubheader { color: #007BFF; }
-        .stMarkdown { font-size: 18px; }
-    </style>
-    """,
-    unsafe_allow_html=True
 )
 
 # 🌍 API Endpoints
@@ -41,19 +19,21 @@ st.sidebar.title("🔍 AI-Powered Insurance Dashboard")
 customer_id = st.sidebar.number_input("Enter Customer ID:", min_value=1, step=1)
 
 # 📌 Fetch Data Button
-if st.sidebar.button("📌 Get My Recommendations & Churn Risk"):
-    with st.spinner("Fetching recommendations & churn prediction..."):
+if st.sidebar.button("📌 Get My Insights"):
+    with st.spinner("Fetching data..."):
         try:
-            # 🔄 Make API calls
-            response = requests.get(f"{FASTAPI_RECOMMEND_URL}{customer_id}")
+            # 🔄 Fetch Data from APIs
+            rec_response = requests.get(f"{FASTAPI_RECOMMEND_URL}{customer_id}")
             churn_response = requests.get(f"{FASTAPI_CHURN_URL}{customer_id}")
 
-            if response.status_code == 200 and churn_response.status_code == 200:
-                rec_data = response.json()
+            # ✅ Check API Status
+            if rec_response.status_code == 200 and churn_response.status_code == 200:
+                rec_data = rec_response.json()
                 churn_data = churn_response.json()
 
                 recommended_policies = rec_data.get("recommended_policies", [])
                 churn_prediction = churn_data.get("churn_prediction", False)
+                shap_values = churn_data.get("shap_values", [])
 
                 # ✅ Display Recommendations
                 st.subheader("📜 Recommended Policies")
@@ -70,36 +50,35 @@ if st.sidebar.button("📌 Get My Recommendations & Churn Risk"):
                 else:
                     st.success("✅ Low Risk: Customer is unlikely to churn.")
 
+                # 📊 Feature Importance (SHAP)
+                if shap_values:
+                    st.subheader("⚡ Feature Importance for Churn Prediction")
+                    shap_df = pd.DataFrame({
+                        "Feature": [f"Feature {i+1}" for i in range(len(shap_values[0]))],
+                        "SHAP Value": [abs(value[0]) for value in shap_values[0]]
+                    })
+                    shap_df = shap_df.sort_values(by="SHAP Value", ascending=False)
+
+                    try:
+                        # Create SHAP Feature Importance Graph
+                        fig = px.bar(
+                            shap_df,
+                            x="SHAP Value",
+                            y="Feature",
+                            orientation="h",
+                            title="🔍 SHAP Feature Importance",
+                            color="SHAP Value",
+                            color_continuous_scale="blues"
+                        )
+                        st.plotly_chart(fig, use_container_width=True)
+                    except Exception as e:
+                        st.error(f"🚨 Error in SHAP Visualization: {e}")
+
             else:
-                st.error("❌ API Error. Check Customer ID.")
+                st.error(f"❌ API Error: {rec_response.status_code} or {churn_response.status_code}")
 
         except requests.exceptions.RequestException as e:
             st.error(f"🚨 API Connection Error: {e}")
-
-# 📊 Customer Data Visualization
-st.subheader("📈 Customer Insights")
-
-try:
-    # Load Data
-    df = pd.read_csv("data/processed/cleaned_customer_data.csv")
-
-    # 🎨 Engagement Score Distribution
-    fig1 = px.histogram(df, x="engagement_score", nbins=20, title="📊 Customer Engagement Distribution", color_discrete_sequence=["#007BFF"])
-    st.plotly_chart(fig1, use_container_width=True)
-
-    # 💰 Income vs. Policy Claims
-    fig2 = px.scatter(df, x="income", y="past_claims", color="engagement_score", title="💰 Income vs. Policy Claims", size_max=15, color_continuous_scale="blues")
-    st.plotly_chart(fig2, use_container_width=True)
-
-    # 📉 Churn Risk Heatmap
-    st.subheader("⚠ Churn Risk Analysis")
-    plt.figure(figsize=(10, 6))
-    corr = df.corr()
-    sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
-    st.pyplot(plt)
-
-except FileNotFoundError:
-    st.warning("⚠ Processed customer data not found! Please preprocess the data first.")
 
 # 🎯 Footer
 st.markdown(

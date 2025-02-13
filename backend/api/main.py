@@ -1,17 +1,13 @@
 from fastapi import FastAPI, HTTPException, Request
-
 import logging
-
 from backend.api.recommend import get_recommendations
 from backend.api.churn import predict_churn
 
 app = FastAPI()
 
-
-
-# ✅ Configure logging
+# ✅ Configure Logging
 logging.basicConfig(
-    filename="api.log",
+    filename="backend/api/api.log",
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
@@ -22,14 +18,13 @@ async def log_requests(request: Request, call_next):
     logging.info(f"{request.method} {request.url} - {response.status_code}")
     return response
 
-# ✅ Home route
+# ✅ API Home Route
 @app.get("/")
 def home():
     return {"message": "API is running successfully"}
 
-# ✅ Cached Recommendation API
+# ✅ Recommendation API
 @app.get("/recommend/{customer_id}")
-
 def recommend(customer_id: int):
     try:
         return get_recommendations(customer_id)
@@ -39,9 +34,8 @@ def recommend(customer_id: int):
         logging.error(f"Error in /recommend/{customer_id}: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
-# ✅ Cached Churn Prediction API
+# ✅ Churn Prediction API with Explainability
 @app.get("/churn/{customer_id}")
-
 def churn(customer_id: int):
     try:
         return predict_churn(customer_id)
