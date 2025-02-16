@@ -1,0 +1,11 @@
+customer_id,policy_id,age,income,past_claims,engagement_score,policy_id.1,age.1,income.1,occupation_y,past_claims.1,engagement_score.1,age_y,income_y,past_claims_y,engagement_score_y,churn,occupation_Developer,occupation_Doctor,occupation_Engineer,occupation_Retired,occupation_Teacher,occupation_Developer.1,occupation_Doctor.1,occupation_Engineer.1,occupation_Retired.1,occupation_Teacher.1,occupation_Developer.2,occupation_Doctor.2,occupation_Engineer.2,occupation_Retired.2,occupation_Teacher.2,occupation_Developer.3,occupation_Doctor.3,occupation_Engineer.3,occupation_Retired.3,occupation_Teacher.3,occupation_Developer,occupation_Doctor,occupation_Engineer,occupation_Retired,occupation_Teacher
+1,101,28,50000,0,4,101,28,50000,Engineer,0,4,28.0,50000.0,0.0,4.0,0.0,0.0,0.0,1.0,0.0,0.0,False,False,True,False,False,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0
+2,102,35,70000,2,5,102,35,70000,Doctor,2,5,35.0,70000.0,2.0,5.0,0.0,0.0,1.0,0.0,0.0,0.0,False,True,False,False,False,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0
+3,103,40,60000,1,3,103,40,60000,Teacher,1,3,40.0,60000.0,1.0,3.0,0.0,0.0,0.0,0.0,0.0,1.0,False,False,False,False,True,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1
+4,104,50,45000,3,4,104,50,45000,Retired,3,4,50.0,45000.0,3.0,4.0,0.0,0.0,0.0,0.0,1.0,0.0,False,False,False,True,False,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0
+5,105,30,80000,0,2,105,30,80000,Developer,0,2,30.0,80000.0,0.0,2.0,0.0,1.0,0.0,0.0,0.0,0.0,True,False,False,False,False,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0
+6,106,45,75000,2,4,106,45,75000,Doctor,2,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,False,True,False,False,False,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0
+7,107,33,67000,1,3,107,33,67000,Engineer,1,3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,False,False,True,False,False,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0
+8,108,50,55000,3,5,108,50,55000,Retired,3,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,False,False,False,True,False,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0
+9,109,28,62000,0,2,109,28,62000,Developer,0,2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,True,False,False,False,False,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0
+10,110,40,71000,2,4,110,40,71000,Teacher,2,4,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,False,False,False,False,True,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1

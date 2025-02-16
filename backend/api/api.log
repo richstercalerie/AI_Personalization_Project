@@ -155,3 +155,158 @@
 2025-02-14 03:43:06,154 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
 2025-02-14 03:46:23,406 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
 2025-02-14 03:46:42,250 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 03:49:43,941 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:10:11,232 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:11:37,823 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:15:51,945 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:18:10,070 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:18:56,587 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:22:28,598 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:25:39,329 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:26:13,059 - INFO - GET http://127.0.0.1:8000/ - 200
+2025-02-14 04:26:13,188 - INFO - GET http://127.0.0.1:8000/favicon.ico - 404
+2025-02-14 04:26:16,855 - INFO - GET http://127.0.0.1:8000/ - 200
+2025-02-14 04:28:13,404 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:29:41,931 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:32:42,744 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 04:36:20,116 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 14:27:38,782 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 14:32:59,332 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 14:39:21,899 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 23:01:41,125 - ERROR - Error in /churn/6: 'customer_id'
+2025-02-14 23:01:41,126 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 23:01:54,085 - ERROR - Error in /churn/6: 'customer_id'
+2025-02-14 23:01:54,085 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 23:03:58,166 - ERROR - Error in /churn/6: 'customer_id'
+2025-02-14 23:03:58,167 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 23:06:45,627 - ERROR - Error in /churn/6: 'customer_id'
+2025-02-14 23:06:45,627 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 23:08:22,589 - ERROR - Error in /churn/6: 'customer_id'
+2025-02-14 23:08:22,590 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 23:12:01,850 - ERROR - \U0001f6a8 Error in /churn/6: 'customer_id'
+Traceback (most recent call last):
+  File "C:\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'customer_id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Anurag mishra\AI_Personalization_Project\backend\api\main.py", line 46, in churn
+    return predict_churn(customer_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anurag mishra\AI_Personalization_Project\backend\api\churn.py", line 29, in predict_churn
+    if customer_id not in df['customer_id'].values:
+                          ~~^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'customer_id'
+
+2025-02-14 23:12:01,852 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-14 23:24:40,808 - ERROR - \U0001f6a8 Error in /churn/6: 'customer_id'
+Traceback (most recent call last):
+  File "C:\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'customer_id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Anurag mishra\AI_Personalization_Project\backend\api\main.py", line 46, in churn
+    return predict_churn(customer_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anurag mishra\AI_Personalization_Project\backend\api\churn.py", line 29, in predict_churn
+    if customer_id not in df['customer_id'].values:
+                          ~~^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'customer_id'
+
+2025-02-14 23:24:40,809 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-15 01:39:49,095 - ERROR - \U0001f6a8 Error in /churn/6: 'customer_id'
+Traceback (most recent call last):
+  File "C:\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'customer_id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Anurag mishra\AI_Personalization_Project\backend\api\main.py", line 46, in churn
+    return predict_churn(customer_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Anurag mishra\AI_Personalization_Project\backend\api\churn.py", line 29, in predict_churn
+    if customer_id not in df['customer_id'].values:
+                          ~~^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'customer_id'
+
+2025-02-15 01:39:49,109 - INFO - GET http://127.0.0.1:8000/churn/6 - 500
+2025-02-16 00:40:33,727 - INFO - GET http://127.0.0.1:8000/churn/6 - 404
+2025-02-16 00:43:16,827 - INFO - GET http://127.0.0.1:8000/churn/6 - 404
+2025-02-16 00:51:35,205 - INFO - GET http://127.0.0.1:8000/churn/6 - 404
+2025-02-16 01:51:38,242 - INFO - GET http://127.0.0.1:8000/churn/6 - 200
+2025-02-16 02:10:05,504 - INFO - GET http://127.0.0.1:8000/recommend/1 - 200
+2025-02-16 02:10:05,526 - INFO - GET http://127.0.0.1:8000/churn/1 - 200
+2025-02-16 02:10:20,787 - INFO - GET http://127.0.0.1:8000/recommend/7 - 404
+2025-02-16 02:10:20,798 - INFO - GET http://127.0.0.1:8000/churn/7 - 200
+2025-02-16 02:10:24,579 - INFO - GET http://127.0.0.1:8000/recommend/6 - 404
+2025-02-16 02:10:24,588 - INFO - GET http://127.0.0.1:8000/churn/6 - 200
+2025-02-16 02:10:26,982 - INFO - GET http://127.0.0.1:8000/recommend/8 - 404
+2025-02-16 02:10:26,982 - INFO - GET http://127.0.0.1:8000/churn/8 - 200
+2025-02-16 02:21:14,422 - INFO - GET http://127.0.0.1:8000/churn/6 - 200
+2025-02-16 02:21:28,592 - INFO - GET http://127.0.0.1:8000/churn/7 - 200
+2025-02-16 02:21:36,311 - INFO - GET http://127.0.0.1:8000/churn/8 - 200
+2025-02-16 02:21:42,524 - INFO - GET http://127.0.0.1:8000/churn/9 - 200
+2025-02-16 02:21:48,394 - INFO - GET http://127.0.0.1:8000/churn/10 - 200
+2025-02-16 02:22:59,020 - INFO - GET http://127.0.0.1:8000/recommend/6 - 404
+2025-02-16 02:22:59,043 - INFO - GET http://127.0.0.1:8000/churn/6 - 200
+2025-02-16 02:24:39,718 - INFO - GET http://127.0.0.1:8000/recommend/6 - 404
+2025-02-16 02:24:40,328 - INFO - GET http://127.0.0.1:8000/churn/6 - 200
+2025-02-16 02:37:32,516 - INFO - GET http://127.0.0.1:8000/recommend/6 - 404
+2025-02-16 02:48:04,043 - INFO - GET http://127.0.0.1:8000/recommend/6 - 404
+2025-02-16 02:51:42,332 - INFO - GET http://127.0.0.1:8000/recommend/6 - 404
+2025-02-16 02:51:59,814 - INFO - GET http://127.0.0.1:8000/recommend/6 - 200
+2025-02-16 02:52:53,610 - INFO - GET http://127.0.0.1:8000/recommend/7 - 200
+2025-02-16 02:52:53,626 - INFO - GET http://127.0.0.1:8000/churn/7 - 200
+2025-02-16 02:52:57,873 - INFO - GET http://127.0.0.1:8000/recommend/5 - 200
+2025-02-16 02:52:57,893 - INFO - GET http://127.0.0.1:8000/churn/5 - 200
+2025-02-16 02:53:01,691 - INFO - GET http://127.0.0.1:8000/recommend/9 - 200
+2025-02-16 02:53:01,699 - INFO - GET http://127.0.0.1:8000/churn/9 - 200
+2025-02-16 02:53:04,177 - INFO - GET http://127.0.0.1:8000/recommend/10 - 200
+2025-02-16 02:53:04,195 - INFO - GET http://127.0.0.1:8000/churn/10 - 200
+2025-02-16 02:53:07,161 - INFO - GET http://127.0.0.1:8000/recommend/7 - 200
+2025-02-16 02:53:07,180 - INFO - GET http://127.0.0.1:8000/churn/7 - 200
+2025-02-16 02:53:09,236 - INFO - GET http://127.0.0.1:8000/recommend/8 - 200
+2025-02-16 02:53:09,250 - INFO - GET http://127.0.0.1:8000/churn/8 - 200
+2025-02-16 02:53:11,296 - INFO - GET http://127.0.0.1:8000/recommend/5 - 200
+2025-02-16 02:53:11,296 - INFO - GET http://127.0.0.1:8000/churn/5 - 200
+2025-02-16 02:53:13,286 - INFO - GET http://127.0.0.1:8000/recommend/3 - 200
+2025-02-16 02:53:13,301 - INFO - GET http://127.0.0.1:8000/churn/3 - 200
+2025-02-16 02:53:14,914 - INFO - GET http://127.0.0.1:8000/recommend/2 - 200
+2025-02-16 02:53:14,931 - INFO - GET http://127.0.0.1:8000/churn/2 - 200

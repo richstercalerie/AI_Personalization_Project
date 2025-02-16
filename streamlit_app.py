@@ -14,6 +14,7 @@ st.set_page_config(
 FASTAPI_RECOMMEND_URL = "http://127.0.0.1:8000/recommend/"
 FASTAPI_CHURN_URL = "http://127.0.0.1:8000/churn/"
 
+
 # 📌 Sidebar with user input
 st.sidebar.title("🔍 AI-Powered Insurance Dashboard")
 customer_id = st.sidebar.number_input("Enter Customer ID:", min_value=1, step=1)
