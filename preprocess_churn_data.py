@@ -33,9 +33,9 @@ if "churn" not in df_processed.columns:
 # ✅ Drop duplicate columns after merging (if any)
 df_processed = df_processed.loc[:, ~df_processed.columns.duplicated()]
 
-# ✅ One-Hot Encode `occupation` (fix "Doctor" issue)
+# ✅ One-Hot Encode `occupation` (Fix "Doctor" issue)
 if "occupation" in df_processed.columns:
-    df_processed = pd.get_dummies(df_processed, columns=["occupation"], dtype=int)
+    df_processed = pd.get_dummies(df_processed, columns=["occupation"], dtype=int, drop_first=True)  # Avoids duplicate features
 
 # ✅ Fill missing values
 df_processed.fillna(0, inplace=True)
